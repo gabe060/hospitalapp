@@ -1,5 +1,6 @@
 package com.hospitalapp.hospitalapp.service;
 
+import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.Paciente;
 import com.hospitalapp.hospitalapp.repository.LeitoRepository;
@@ -18,7 +19,6 @@ public class LeitoService {
         this.leitoRepository = leitoRepository;
     }
 
-
     @Transactional
     public Iterable<Leito> findAll() {
         return this.leitoRepository.findAll();
@@ -28,4 +28,22 @@ public class LeitoService {
     public Leito findByLeitoId(long leitoId) {
         return this.leitoRepository.findByLeitoId(leitoId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leito não encontrado: " + leitoId + ". Verifique o ID informado!"));
     }
+
+
+//    @Transactional
+//    public void internarPaciente(Long leitoId, String nome) {
+//        Leito leito = this.findByLeitoId(leitoId);
+//        if (leito.getStatus() == (StatusEnum.LIBERADO)) {
+//            Paciente paciente = new Paciente();
+//            paciente.setNome(nome);
+//            leito.setStatus(StatusEnum.OCUPADO);
+//        } else {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Leito já ocupado");
+//        }
+//
+//        this.sessaoRepository.save(sessao);
+//    }
+
+
+
 }
