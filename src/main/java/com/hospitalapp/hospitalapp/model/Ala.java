@@ -3,7 +3,6 @@ package com.hospitalapp.hospitalapp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,13 +23,6 @@ public class Ala {
     @NotEmpty(message = "A especialidade da ala não pode ser vazia")
     @Column(name = "especialidade")
     private String especialidade;
-
-    @NotNull(message = "A quantidade de quartos não pode ser vazia")
-    @Column(name = "quantidade_quartos")
-    private Integer quantQuartos;
-    @NotNull(message = "A quantidade de leitos não pode ser vazia")
-    @Column(name = "quantidade_leitos_por_quarto")
-    private Integer quantLeitosPorQuarto;
 
     @ManyToOne
     @JsonIgnore

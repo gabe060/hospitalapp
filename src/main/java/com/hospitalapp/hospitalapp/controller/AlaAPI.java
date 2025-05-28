@@ -1,5 +1,6 @@
 package com.hospitalapp.hospitalapp.controller;
 
+import com.hospitalapp.hospitalapp.dto.AlaRequestDTO;
 import com.hospitalapp.hospitalapp.model.Ala;
 import com.hospitalapp.hospitalapp.model.Hospital;
 import com.hospitalapp.hospitalapp.service.AlaService;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/hospital/{hospitalId}/ala")
+@RequestMapping("/hospital/ala")
 public class AlaAPI {
 
     private final AlaService alaService;
@@ -23,21 +24,22 @@ public class AlaAPI {
 
 
     @PostMapping("/new")
-    public ResponseEntity<Hospital> newAla(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid Ala ala) {
-        return ResponseEntity.ok(this.hospitalService.newAla(hospitalId, ala));
+    public ResponseEntity<Hospital> newAla(@RequestBody @Valid AlaRequestDTO dto) {
+        Hospital hospital = hospitalService.findByHospitalId(dto.getHospitalId());
+        alaService.newAla(dto);
+        return ResponseEntity.ok(hospital);
     }
 
     @DeleteMapping(value = "/{alaId}/delete")
-    public ResponseEntity<Void> delete(@PathVariable("alaId") Long alaId, @PathVariable("hospitalId") Long hospitalId) {
-        Hospital hospital = hospitalService.findByHospitalId(hospitalId);
+    public ResponseEntity<Void> delete(@PathVariable("alaId") Long alaId) {
         Ala ala = alaService.findByAlaId(alaId);
         alaService.delete(ala);
         return ResponseEntity.accepted().build();
     }
 
     @GetMapping("/{alaId}")
-    public ResponseEntity<Iterable<Ala>> listaAlas() {
-        Iterable<Ala> alas = alaService.findAll();
-        return ResponseEntity.ok(alas);
+    public ResponseEntity getAlaById(@PathVariable("alaId") Long alaId) {
+        Ala ala = alaService.findByAlaId(alaId);
+        return ResponseEntity.ok(ala);
     }
 }

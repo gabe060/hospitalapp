@@ -33,7 +33,7 @@ public class Leito {
     @JoinColumn(name = "quarto_id")
     private Quarto quarto;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 

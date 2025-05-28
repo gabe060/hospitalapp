@@ -3,7 +3,6 @@ package com.hospitalapp.hospitalapp.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
