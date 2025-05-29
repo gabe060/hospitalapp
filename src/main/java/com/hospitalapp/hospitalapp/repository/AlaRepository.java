@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface AlaRepository extends JpaRepository<Ala, Long> {
     Optional<Ala> findByAlaId(long alaId);
+
+    Iterable<Ala> findAllByEspecialidadeIgnoreCase(String especialidade);
 }

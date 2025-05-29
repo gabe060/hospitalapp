@@ -39,6 +39,15 @@ public class AlaService {
     }
 
     @Transactional
+    public Iterable<Ala> findAllByEspecialidade(String especialidade) {
+        Iterable<Ala> alas = this.alaRepository.findAllByEspecialidadeIgnoreCase(especialidade);
+        if (!alas.iterator().hasNext()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não há ala com a especialidade: " + especialidade + ". Verifique a especialidade informada!");
+        }
+        return this.alaRepository.findAllByEspecialidadeIgnoreCase(especialidade);
+    }
+
+    @Transactional
     public Hospital findByHospitalId(long hospitalId) {
         return this.hospitalRepository.findByHospitalId(hospitalId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Hospital não encontrado: " + hospitalId + ". Verifique o ID informado!"));
     }
@@ -52,7 +61,7 @@ public class AlaService {
 
 
     @Transactional
-    public Hospital newAla(AlaRequestDTO dto) {
+    public void newAla(AlaRequestDTO dto) {
         Hospital hospital = this.findByHospitalId(dto.getHospitalId());
         Ala ala = new Ala();
         ala.setHospital(hospital);
@@ -84,7 +93,7 @@ public class AlaService {
 
         ala.setQuartos(quartosList);
         hospital.addAla(ala);
-        return this.hospitalRepository.save(hospital);
+        this.hospitalRepository.save(hospital);
     }
 
 }

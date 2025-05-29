@@ -1,5 +1,6 @@
 package com.hospitalapp.hospitalapp.dto;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,9 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PacienteRequestDTO {
+public class PacienteRequestAltaDTO {
 
-    @NotEmpty(message = "O nome do paciente não pode ser vazio")
-    private String nome;
+    @NotNull(message = "O id do paciente não pode ser vazio")
+    private Long pacienteId;
 
 }

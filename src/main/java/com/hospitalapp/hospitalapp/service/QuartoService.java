@@ -1,6 +1,5 @@
 package com.hospitalapp.hospitalapp.service;
 
-import com.hospitalapp.hospitalapp.model.Ala;
 import com.hospitalapp.hospitalapp.model.Quarto;
 import com.hospitalapp.hospitalapp.repository.QuartoRepository;
 import jakarta.transaction.Transactional;

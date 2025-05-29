@@ -1,11 +1,6 @@
 package com.hospitalapp.hospitalapp.service;
 
-import com.hospitalapp.hospitalapp.enums.StatusEnum;
-import com.hospitalapp.hospitalapp.model.Ala;
 import com.hospitalapp.hospitalapp.model.Hospital;
-import com.hospitalapp.hospitalapp.model.Leito;
-import com.hospitalapp.hospitalapp.model.Quarto;
-import com.hospitalapp.hospitalapp.repository.AlaRepository;
 import com.hospitalapp.hospitalapp.repository.HospitalRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
@@ -18,11 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 public class HospitalService {
 
     private final HospitalRepository hospitalRepository;
-    private final AlaRepository alaRepository;
 
-    public HospitalService(HospitalRepository hospitalRepository, AlaRepository alaRepository) {
+    public HospitalService(HospitalRepository hospitalRepository) {
         this.hospitalRepository = hospitalRepository;
-        this.alaRepository = alaRepository;
     }
 
     @Transactional

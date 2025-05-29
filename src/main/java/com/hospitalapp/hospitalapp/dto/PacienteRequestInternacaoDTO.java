@@ -1,5 +1,4 @@
 package com.hospitalapp.hospitalapp.dto;
-
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,11 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class HospitalDTO {
+public class PacienteRequestInternacaoDTO {
 
-    private Long hospitalId;
-
-    @NotEmpty(message = "O nome do hospital não pode ser vazio")
+    @NotEmpty(message = "O nome do paciente não pode ser vazio")
     private String nome;
+
+    @NotEmpty(message = "A especialidade da ala não pode ser vazia")
+    private String especialidade;
 
 }

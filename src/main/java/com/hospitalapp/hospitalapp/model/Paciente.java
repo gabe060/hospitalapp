@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -19,6 +21,12 @@ public class Paciente {
     @NotEmpty(message = "O nome do paciente não pode ser vazio")
     @Column(name = "nome")
     private String nome;
+
+    @Column(name = "internacao")
+    private LocalDateTime dataInternacao;
+
+    @Column(name = "alta")
+    private LocalDateTime dataAlta;
 
 
 }

@@ -3,7 +3,6 @@ package com.hospitalapp.hospitalapp.service;
 import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.Paciente;
-import com.hospitalapp.hospitalapp.model.Quarto;
 import com.hospitalapp.hospitalapp.repository.LeitoRepository;
 import com.hospitalapp.hospitalapp.repository.PacienteRepository;
 import jakarta.transaction.Transactional;
@@ -38,16 +37,28 @@ public class PacienteService {
     }
 
     @Transactional
-    public void internarPaciente(Long leitoId, String nome) {
-        Leito leito = this.findByLeitoId(leitoId);
-        if (leito.getStatus() == (StatusEnum.LIBERADO)) {
-            Paciente paciente = new Paciente();
-            paciente.setNome(nome);
-            leito.setStatus(StatusEnum.OCUPADO);
-            leito.setPaciente(paciente);
-        } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Leito já ocupado");
-        }
+    public Leito findFirstLeitoLiberadoByEspecialidadeAndHospitalId(String especialidade, Long hospitalId) {
+        return this.leitoRepository.findFirstByQuartoAlaEspecialidadeIgnoreCaseAndQuartoAlaHospitalHospitalIdAndStatus(especialidade, hospitalId, StatusEnum.LIBERADO).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum leito liberado encontrado para a especialidade '" + especialidade + "' no hospital de ID " + hospitalId));
+    }
+
+    @Transactional
+    public void internarPaciente(String especialidade, String nome, Long hospitalId) {
+        Leito leito = this.findFirstLeitoLiberadoByEspecialidadeAndHospitalId(especialidade, hospitalId);
+        Paciente paciente = new Paciente();
+        paciente.setNome(nome);
+        paciente.setDataInternacao(java.time.LocalDateTime.now());
+        leito.setStatus(StatusEnum.OCUPADO);
+        leito.setPaciente(paciente);
+
+        this.leitoRepository.save(leito);
+    }
+
+    @Transactional
+    public void altaPaciente(Long pacienteId, Leito leito) {
+        Paciente paciente = this.findByPacienteId(pacienteId);
+        paciente.setDataAlta(java.time.LocalDateTime.now());
+        leito.setStatus(StatusEnum.LIBERADO);
+        leito.setPaciente(paciente);
 
         this.leitoRepository.save(leito);
     }
