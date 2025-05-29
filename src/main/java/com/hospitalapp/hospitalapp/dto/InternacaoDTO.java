@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class PacienteRequestInternacaoDTO {
+public class InternacaoDTO {
 
     @NotEmpty(message = "O nome do paciente não pode ser vazio")
     private String nome;

@@ -1,6 +1,6 @@
 package com.hospitalapp.hospitalapp.controller;
 
-import com.hospitalapp.hospitalapp.dto.AlaRequestDTO;
+import com.hospitalapp.hospitalapp.dto.NewAlaDTO;
 import com.hospitalapp.hospitalapp.model.Ala;
 import com.hospitalapp.hospitalapp.model.Hospital;
 import com.hospitalapp.hospitalapp.service.AlaService;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/hospital/ala")
+@RequestMapping("/hospital/{hospitalId}/ala")
 public class AlaAPI {
 
     private final AlaService alaService;
@@ -24,9 +24,9 @@ public class AlaAPI {
 
 
     @PostMapping("/new")
-    public ResponseEntity<Hospital> newAla(@RequestBody @Valid AlaRequestDTO dto) {
-        Hospital hospital = hospitalService.findByHospitalId(dto.getHospitalId());
-        alaService.newAla(dto);
+    public ResponseEntity<Hospital> newAla(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid NewAlaDTO dto) {
+        Hospital hospital = hospitalService.findByHospitalId(hospitalId);
+        alaService.newAla(dto, hospitalId);
         return ResponseEntity.ok(hospital);
     }
 

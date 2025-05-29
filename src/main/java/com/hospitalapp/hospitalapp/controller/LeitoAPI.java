@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/hospital/{hospitalId}/ala/{alaId}/quarto/{quartoId}/leito")
+@RequestMapping("/hospital/{hospitalId}/leito")
 public class LeitoAPI {
 
 
@@ -20,8 +20,8 @@ public class LeitoAPI {
     }
 
     @GetMapping("/{leitoId}")
-    public ResponseEntity getLeitoById(@PathVariable("leitoId") Long leitoId) {
-        Leito leito = leitoService.findByLeitoId(leitoId);
+    public ResponseEntity getLeitoByIdAndHospitalId(@PathVariable("hospitalId") Long hospitalId, @PathVariable("leitoId") Long leitoId) {
+        Leito leito = leitoService.findByLeitoIdAndHospitalId(leitoId, hospitalId);
         return ResponseEntity.ok(leito);
     }
 }

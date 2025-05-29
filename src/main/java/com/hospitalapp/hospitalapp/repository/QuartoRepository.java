@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface QuartoRepository extends JpaRepository<Quarto, Long> {
-    Optional<Quarto> findByQuartoId(long quartoId);
+    Optional<Quarto> findByQuartoIdAndAlaHospitalHospitalId(long quartoId, Long hospitalId);
 }

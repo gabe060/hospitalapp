@@ -1,7 +1,7 @@
 package com.hospitalapp.hospitalapp.controller;
 
-import com.hospitalapp.hospitalapp.dto.PacienteRequestAltaDTO;
-import com.hospitalapp.hospitalapp.dto.PacienteRequestInternacaoDTO;
+import com.hospitalapp.hospitalapp.dto.AltaDTO;
+import com.hospitalapp.hospitalapp.dto.InternacaoDTO;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.Paciente;
 import com.hospitalapp.hospitalapp.service.LeitoService;
@@ -29,7 +29,7 @@ public class PacienteAPI {
     }
 
     @PostMapping("/internar")
-    public ResponseEntity<String> internarPaciente(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid PacienteRequestInternacaoDTO dto) {
+    public ResponseEntity<String> internarPaciente(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid InternacaoDTO dto) {
         String nome = dto.getNome();
         String especialidade = dto.getEspecialidade();
         Leito leito = leitoService.findFirstLeitoLiberadoByEspecialidadeAndHospitalId(especialidade, hospitalId);
@@ -45,7 +45,7 @@ public class PacienteAPI {
     }
 
     @PostMapping("/alta")
-    public ResponseEntity<String> altaPaciente(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid PacienteRequestAltaDTO dto) {
+    public ResponseEntity<String> altaPaciente(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid AltaDTO dto) {
         Long pacienteId = dto.getPacienteId();
         Leito leito = leitoService.findByPacientePacienteIdAndHospitalId(pacienteId, hospitalId);
         Paciente paciente = pacienteService.findByPacienteId(pacienteId);

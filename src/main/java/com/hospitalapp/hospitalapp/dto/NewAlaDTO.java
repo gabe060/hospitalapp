@@ -9,9 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AlaRequestDTO {
-
-    private Long hospitalId;
+public class NewAlaDTO {
 
     @NotEmpty(message = "A especialidade da ala não pode ser vazia")
     private String especialidade;

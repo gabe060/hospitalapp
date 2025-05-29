@@ -23,8 +23,8 @@ public class LeitoService {
     }
 
     @Transactional
-    public Leito findByLeitoId(long leitoId) {
-        return this.leitoRepository.findByLeitoId(leitoId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leito não encontrado: " + leitoId + ". Verifique o ID informado!"));
+    public Leito findByLeitoIdAndHospitalId(Long leitoId, Long hospitalId) {
+        return this.leitoRepository.findByLeitoIdAndQuartoAlaHospitalHospitalId(leitoId, hospitalId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leito não encontrado: " + leitoId + ". Verifique o ID informado!"));
     }
 
     @Transactional

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface LeitoRepository extends JpaRepository<Leito, Long> {
-    Optional<Leito> findByLeitoId(long leitoId);
+    Optional<Leito> findByLeitoIdAndQuartoAlaHospitalHospitalId(Long leitoId, Long hospitalId);
 
     Optional<Leito> findFirstByQuartoAlaEspecialidadeIgnoreCaseAndQuartoAlaHospitalHospitalIdAndStatus(String especialidade, Long hospitalId, StatusEnum status);
 

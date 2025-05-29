@@ -32,11 +32,6 @@ public class PacienteService {
     }
 
     @Transactional
-    public Leito findByLeitoId(long leitoId) {
-        return this.leitoRepository.findByLeitoId(leitoId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leito não encontrado: " + leitoId + ". Verifique o ID informado!"));
-    }
-
-    @Transactional
     public Leito findFirstLeitoLiberadoByEspecialidadeAndHospitalId(String especialidade, Long hospitalId) {
         return this.leitoRepository.findFirstByQuartoAlaEspecialidadeIgnoreCaseAndQuartoAlaHospitalHospitalIdAndStatus(especialidade, hospitalId, StatusEnum.LIBERADO).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum leito liberado encontrado para a especialidade '" + especialidade + "' no hospital de ID " + hospitalId));
     }

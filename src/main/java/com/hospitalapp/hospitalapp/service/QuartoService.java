@@ -22,8 +22,8 @@ public class QuartoService {
     }
 
     @Transactional
-    public Quarto findByQuartoId(long quartoId) {
-        return this.quartoRepository.findByQuartoId(quartoId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quarto não encontrado: " + quartoId + ". Verifique o ID informado!"));
+    public Quarto findByQuartoIdAndHospitalId(Long quartoId, Long hospitalId) {
+        return this.quartoRepository.findByQuartoIdAndAlaHospitalHospitalId(quartoId, hospitalId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Quarto não encontrado: " + quartoId + ". Verifique o ID informado!"));
     }
 
 }

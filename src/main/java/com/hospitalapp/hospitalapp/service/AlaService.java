@@ -1,6 +1,6 @@
 package com.hospitalapp.hospitalapp.service;
 
-import com.hospitalapp.hospitalapp.dto.AlaRequestDTO;
+import com.hospitalapp.hospitalapp.dto.NewAlaDTO;
 import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import com.hospitalapp.hospitalapp.model.Ala;
 import com.hospitalapp.hospitalapp.model.Hospital;
@@ -39,15 +39,6 @@ public class AlaService {
     }
 
     @Transactional
-    public Iterable<Ala> findAllByEspecialidade(String especialidade) {
-        Iterable<Ala> alas = this.alaRepository.findAllByEspecialidadeIgnoreCase(especialidade);
-        if (!alas.iterator().hasNext()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não há ala com a especialidade: " + especialidade + ". Verifique a especialidade informada!");
-        }
-        return this.alaRepository.findAllByEspecialidadeIgnoreCase(especialidade);
-    }
-
-    @Transactional
     public Hospital findByHospitalId(long hospitalId) {
         return this.hospitalRepository.findByHospitalId(hospitalId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Hospital não encontrado: " + hospitalId + ". Verifique o ID informado!"));
     }
@@ -61,8 +52,8 @@ public class AlaService {
 
 
     @Transactional
-    public void newAla(AlaRequestDTO dto) {
-        Hospital hospital = this.findByHospitalId(dto.getHospitalId());
+    public void newAla(NewAlaDTO dto, Long hospitalId) {
+        Hospital hospital = this.findByHospitalId(hospitalId);
         Ala ala = new Ala();
         ala.setHospital(hospital);
         ala.setEspecialidade(dto.getEspecialidade());
