@@ -17,13 +17,11 @@ public class LogInternacao {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idLogInternacao;
 
-    @ManyToOne
     @JoinColumn(name = "leito_id")
-    private Leito leito;
+    private Long leitoId;
 
-    @ManyToOne
     @JoinColumn(name = "paciente_id")
-    private Paciente paciente;
+    private Long pacienteId;
 
     private LocalDateTime dataInternacao;
     private LocalDateTime dataAlta;

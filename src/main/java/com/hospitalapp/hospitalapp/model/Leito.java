@@ -36,4 +36,7 @@ public class Leito {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
 
+
+
+
 }

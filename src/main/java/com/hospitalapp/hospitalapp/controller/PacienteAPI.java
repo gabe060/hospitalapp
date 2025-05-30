@@ -5,6 +5,7 @@ import com.hospitalapp.hospitalapp.dto.InternacaoDTO;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.Paciente;
 import com.hospitalapp.hospitalapp.service.LeitoService;
+import com.hospitalapp.hospitalapp.service.LogInternacaoService;
 import com.hospitalapp.hospitalapp.service.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +23,12 @@ public class PacienteAPI {
 
     private final LeitoService leitoService;
     private final PacienteService pacienteService;
+    private final LogInternacaoService logInternacaoService;
 
-    public PacienteAPI(LeitoService leitoService, PacienteService pacienteService) {
+    public PacienteAPI(LeitoService leitoService, PacienteService pacienteService, LogInternacaoService logInternacaoService) {
         this.leitoService = leitoService;
         this.pacienteService = pacienteService;
+        this.logInternacaoService = logInternacaoService;
     }
 
     @PostMapping("/internar")
@@ -39,6 +42,9 @@ public class PacienteAPI {
         String especialidadeAla = leito.getQuarto().getAla().getEspecialidade();
         pacienteService.internarPaciente(especialidade, nome, hospitalId);
         LocalDateTime dataInternacao = leito.getPaciente().getDataInternacao();
+        Long leitoId = leito.getLeitoId();
+        Long pacienteId = leito.getPaciente().getPacienteId();
+        logInternacaoService.log(leitoId, pacienteId);
 
 
         return ResponseEntity.ok("Paciente " + nome + " foi internado na ala " + alaId + " (" + especialidadeAla + "), quarto " + codigoQuarto + ", leito " + codigoLeito + " em " + dataInternacao + ".");
@@ -52,6 +58,7 @@ public class PacienteAPI {
         String nome = paciente.getNome();
         pacienteService.altaPaciente(pacienteId, leito);
         LocalDateTime dataAlta = leito.getPaciente().getDataAlta();
+        logInternacaoService.logAlta(leito.getLeitoId());
 
         return ResponseEntity.ok("Paciente " + nome + " foi liberado em " + dataAlta + ".");
     }
