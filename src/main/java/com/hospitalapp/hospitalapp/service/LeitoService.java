@@ -37,5 +37,9 @@ public class LeitoService {
         return this.leitoRepository.findByPacientePacienteIdAndQuartoAlaHospitalHospitalId(pacienteId, hospitalId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Leito não encontrado para o paciente de ID " + pacienteId));
     }
 
+    @Transactional
+    public Iterable<Leito> findByEspecialidadeLiberadoAndHospitalId(String especialidade, Long hospitalId) {
+        return this.leitoRepository.findByStatusAndQuartoAlaEspecialidadeAndQuartoAlaHospitalHospitalId(StatusEnum.LIBERADO, especialidade, hospitalId);
+    }
 
 }

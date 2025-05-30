@@ -1,13 +1,9 @@
 package com.hospitalapp.hospitalapp.service;
 
-import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.LogInternacao;
-import com.hospitalapp.hospitalapp.model.Paciente;
 import com.hospitalapp.hospitalapp.repository.LogInternacaoRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,7 +42,7 @@ public class LogInternacaoService {
                 .stream()
                 .filter(l -> l.getDataAlta() == null)
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Internação não encontrada para este leito"));
+                .orElseThrow(() -> new RuntimeException("Internação não encontrada para este Paciente no Leito de ID: " + leitoId));
 
         log.setDataAlta(LocalDateTime.now());
         this.logInternacaoRepository.save(log);

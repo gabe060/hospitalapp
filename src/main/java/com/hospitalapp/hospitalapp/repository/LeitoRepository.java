@@ -14,4 +14,6 @@ public interface LeitoRepository extends JpaRepository<Leito, Long> {
     Optional<Leito> findFirstByQuartoAlaEspecialidadeIgnoreCaseAndQuartoAlaHospitalHospitalIdAndStatus(String especialidade, Long hospitalId, StatusEnum status);
 
     Optional<Leito> findByPacientePacienteIdAndQuartoAlaHospitalHospitalId(Long pacienteId, Long hospitalId);
+
+    Iterable<Leito> findByStatusAndQuartoAlaEspecialidadeAndQuartoAlaHospitalHospitalId(StatusEnum status, String especialidade, Long hospitalId);
 }
