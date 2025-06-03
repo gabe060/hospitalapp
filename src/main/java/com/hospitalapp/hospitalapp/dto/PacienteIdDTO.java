@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AltaDTO {
+public class PacienteIdDTO {
 
     @NotNull(message = "O id do paciente não pode ser vazio")
     private Long pacienteId;

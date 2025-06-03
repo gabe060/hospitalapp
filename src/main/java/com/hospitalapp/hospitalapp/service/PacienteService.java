@@ -3,12 +3,15 @@ package com.hospitalapp.hospitalapp.service;
 import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.Paciente;
+import com.hospitalapp.hospitalapp.projection.PacientesInternadosAlfabeticoProjection;
 import com.hospitalapp.hospitalapp.repository.LeitoRepository;
 import com.hospitalapp.hospitalapp.repository.PacienteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @Service
 public class PacienteService {
@@ -56,6 +59,17 @@ public class PacienteService {
         leito.setPaciente(paciente);
 
         this.leitoRepository.save(leito);
+    }
+
+    @Transactional
+    public List<PacientesInternadosAlfabeticoProjection> getPacientesInternadosAlfabeticamente(Long hospitalId) {
+        List<PacientesInternadosAlfabeticoProjection> pacientesInternados = pacienteRepository.findPacientesInternadosAlfabeticamenteByHospitalId(hospitalId);
+
+        if (pacientesInternados.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não há pacientes internados no hospital de ID " + hospitalId);
+        }
+
+        return pacientesInternados;
     }
 
 }

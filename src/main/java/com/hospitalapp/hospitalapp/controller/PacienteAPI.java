@@ -1,6 +1,6 @@
 package com.hospitalapp.hospitalapp.controller;
 
-import com.hospitalapp.hospitalapp.dto.AltaDTO;
+import com.hospitalapp.hospitalapp.dto.PacienteIdDTO;
 import com.hospitalapp.hospitalapp.dto.InternacaoDTO;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.Paciente;
@@ -51,7 +51,7 @@ public class PacienteAPI {
     }
 
     @PostMapping("/alta")
-    public ResponseEntity<String> altaPaciente(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid AltaDTO dto) {
+    public ResponseEntity<String> altaPaciente(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid PacienteIdDTO dto) {
         Long pacienteId = dto.getPacienteId();
         Leito leito = leitoService.findByPacientePacienteIdAndHospitalId(pacienteId, hospitalId);
         Paciente paciente = pacienteService.findByPacienteId(pacienteId);
