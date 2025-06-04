@@ -6,7 +6,7 @@ services:
     container_name: hospitalapp-db
     restart: always
     ports:
-      - "7070:5432"
+      - "9060:5432"
     environment:
       POSTGRES_USER: "hospitalapp"
       POSTGRES_DB: "hospitalapp"
