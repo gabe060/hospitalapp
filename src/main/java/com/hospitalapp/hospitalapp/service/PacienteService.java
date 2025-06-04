@@ -3,10 +3,20 @@ package com.hospitalapp.hospitalapp.service;
 import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.Paciente;
+import com.hospitalapp.hospitalapp.model.Quarto;
+import com.hospitalapp.hospitalapp.projection.HistoricoInternacaoPacienteProjection;
+import com.hospitalapp.hospitalapp.projection.InfoPacienteProjection;
+import com.hospitalapp.hospitalapp.projection.PacienteQuartoProjection;
 import com.hospitalapp.hospitalapp.projection.PacientesInternadosAlfabeticoProjection;
 import com.hospitalapp.hospitalapp.repository.LeitoRepository;
+import com.hospitalapp.hospitalapp.repository.LogInternacaoRepository;
 import com.hospitalapp.hospitalapp.repository.PacienteRepository;
+import com.hospitalapp.hospitalapp.repository.QuartoRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,10 +28,14 @@ public class PacienteService {
 
     private final PacienteRepository pacienteRepository;
     private final LeitoRepository leitoRepository;
+    private final QuartoRepository quartoRepository;
+    private final LogInternacaoRepository logInternacaoRepository;
 
-    public PacienteService(PacienteRepository pacienteRepository, LeitoRepository leitoRepository) {
+    public PacienteService(PacienteRepository pacienteRepository, LeitoRepository leitoRepository, QuartoRepository quartoRepository, LogInternacaoRepository logInternacaoRepository) {
         this.pacienteRepository = pacienteRepository;
         this.leitoRepository = leitoRepository;
+        this.quartoRepository = quartoRepository;
+        this.logInternacaoRepository = logInternacaoRepository;
     }
 
     @Transactional
@@ -49,6 +63,15 @@ public class PacienteService {
         leito.setPaciente(paciente);
 
         this.leitoRepository.save(leito);
+
+        Quarto quarto = leito.getQuarto();
+        boolean todosOcupados = quarto.getLeitos().stream()
+                .allMatch(l -> l.getStatus() == StatusEnum.OCUPADO);
+        if (todosOcupados) {
+            quarto.setStatus(StatusEnum.OCUPADO);
+            quartoRepository.save(quarto);
+        }
+
     }
 
     @Transactional
@@ -59,6 +82,14 @@ public class PacienteService {
         leito.setPaciente(paciente);
 
         this.leitoRepository.save(leito);
+
+        Quarto quarto = leito.getQuarto();
+        boolean algumLiberado = quarto.getLeitos().stream()
+                .anyMatch(l -> l.getStatus() == StatusEnum.LIBERADO);
+        if (algumLiberado) {
+            quarto.setStatus(StatusEnum.LIBERADO);
+            quartoRepository.save(quarto);
+        }
     }
 
     @Transactional
@@ -70,6 +101,22 @@ public class PacienteService {
         }
 
         return pacientesInternados;
+    }
+
+    @Transactional
+    public Page<HistoricoInternacaoPacienteProjection> getHistoricoPaciente(Long pacienteId, Long hospitalId, int page) {
+        Pageable pageable = PageRequest.of(page, 1, Sort.by("dataInternacao").descending());
+        return pacienteRepository.findHistoricoByPacienteId(pacienteId, hospitalId, pageable);
+    }
+
+    @Transactional
+    public InfoPacienteProjection getInfoPaciente(Long pacienteId, Long hospitalId) {
+        return leitoRepository.findInfoPacienteByPacienteId(pacienteId, hospitalId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não está internado"));
+    }
+
+    @Transactional
+    public PacienteQuartoProjection getQuartoPaciente(Long pacienteId, Long hospitalId) {
+        return leitoRepository.findQuartoPaciente(pacienteId, hospitalId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não está internado"));
     }
 
 }
