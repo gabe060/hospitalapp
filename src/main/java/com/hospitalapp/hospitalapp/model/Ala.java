@@ -32,5 +32,4 @@ public class Ala {
     @OneToMany(mappedBy = "ala", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Quarto> quartos = new ArrayList<>();
 
-
 }

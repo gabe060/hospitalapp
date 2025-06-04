@@ -3,7 +3,8 @@ package com.hospitalapp.hospitalapp.repository;
 import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.projection.HistoricoInternacaoLeitoProjection;
-import com.hospitalapp.hospitalapp.projection.QuartoInternadoProjection;
+import com.hospitalapp.hospitalapp.projection.InfoPacienteProjection;
+import com.hospitalapp.hospitalapp.projection.PacienteQuartoProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -38,7 +39,22 @@ public interface LeitoRepository extends JpaRepository<Leito, Long> {
                 AND h.hospitalId = :hospitalId
                 AND p.dataAlta IS NULL
             """)
-    Optional<QuartoInternadoProjection> findQuartoByPacienteId(@Param("pacienteId") Long pacienteId, @Param("hospitalId") Long hospitalId);
+    Optional<InfoPacienteProjection> findInfoPacienteByPacienteId(Long pacienteId, Long hospitalId);
+
+    @Query("""
+                SELECT\s
+                    p.nome AS nomePaciente,
+                    q.codigoQuarto AS codigoQuarto
+                FROM Leito l
+                JOIN l.paciente p
+                JOIN l.quarto q
+                JOIN q.ala a
+                JOIN a.hospital h
+                WHERE p.pacienteId = :pacienteId
+                AND h.hospitalId = :hospitalId
+                AND p.dataAlta IS NULL
+            """)
+    Optional<PacienteQuartoProjection> findQuartoPaciente(@Param("pacienteId") Long pacienteId, @Param("hospitalId") Long hospitalId);
 
     Iterable<Leito> findAllByQuartoAlaHospitalHospitalId(Long hospitalId);
 
@@ -56,7 +72,7 @@ public interface LeitoRepository extends JpaRepository<Leito, Long> {
                 JOIN hospital h ON a.hospital_id = h.hospital_id
                 WHERE l.codigo = :codigoLeito
                 AND h.hospital_id = :hospitalId
-                ORDER BY log.data_internamento DESC
+                ORDER BY log.data_internacao DESC
             """, nativeQuery = true)
     List<HistoricoInternacaoLeitoProjection> findHistoricoByCodigoLeito(@Param("codigoLeito") String codigoLeito, @Param("hospitalId") Long hospitalId);
 }

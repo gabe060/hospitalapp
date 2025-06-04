@@ -3,7 +3,6 @@ package com.hospitalapp.hospitalapp.service;
 import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.projection.HistoricoInternacaoLeitoProjection;
-import com.hospitalapp.hospitalapp.projection.QuartoInternadoProjection;
 import com.hospitalapp.hospitalapp.repository.LeitoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
@@ -48,10 +47,7 @@ public class LeitoService {
         return this.leitoRepository.findByStatusAndQuartoAlaEspecialidadeAndQuartoAlaHospitalHospitalId(StatusEnum.LIBERADO, especialidade, hospitalId);
     }
 
-    @Transactional
-    public QuartoInternadoProjection getQuartoPaciente(Long pacienteId, Long hospitalId) {
-        return leitoRepository.findQuartoByPacienteId(pacienteId, hospitalId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Paciente não está internado"));
-    }
+
 
     @Transactional
     public Iterable<Leito> findAllByHospitalId(Long hospitalId) {

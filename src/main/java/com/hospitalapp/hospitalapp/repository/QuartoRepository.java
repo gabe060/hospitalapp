@@ -13,26 +13,18 @@ import java.util.Optional;
 
 @Repository
 public interface QuartoRepository extends JpaRepository<Quarto, Long> {
-    Optional<Quarto> findByQuartoIdAndAlaHospitalHospitalId(long quartoId, Long hospitalId);
+    Optional<Quarto> findByQuartoIdAndAlaHospitalHospitalId(Long quartoId, Long hospitalId);
 
     @Query(value = """
                 SELECT 
                     a.especialidade AS especialidade,
                     COUNT(DISTINCT q.quarto_id) AS totalQuartos,
                     COUNT(DISTINCT CASE 
-                        WHEN NOT EXISTS (
-                            SELECT 1 FROM leito l 
-                            WHERE l.quarto_id = q.quarto_id AND l.status = 'OCUPADO'
-                        )
-                        THEN q.quarto_id END
-                    ) AS quartosLivres,
+                        WHEN q.status = 'LIBERADO' THEN q.quarto_id\s
+                        END) AS quartosLivres,
                     COUNT(DISTINCT CASE 
-                        WHEN EXISTS (
-                            SELECT 1 FROM leito l 
-                            WHERE l.quarto_id = q.quarto_id AND l.status = 'OCUPADO'
-                        )
-                        THEN q.quarto_id END
-                    ) AS quartosEmUso
+                        WHEN q.status = 'OCUPADO' THEN q.quarto_id\s
+                        END) AS quartosOcupados
                 FROM quarto q
                 JOIN ala a ON q.ala_id = a.ala_id
                     WHERE a.hospital_id = :hospitalId
@@ -52,6 +44,5 @@ public interface QuartoRepository extends JpaRepository<Quarto, Long> {
             ) AND a.hospital_id = :hospitalId
             """, nativeQuery = true)
     List<QuartoWithLeitoLiberadoProjection> findQuartosWithLeitoLiberado(@Param("hospitalId") Long hospitalId);
-
 
 }

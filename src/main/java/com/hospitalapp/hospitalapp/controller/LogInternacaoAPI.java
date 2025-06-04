@@ -1,8 +1,6 @@
 package com.hospitalapp.hospitalapp.controller;
 
-import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.model.LogInternacao;
-import com.hospitalapp.hospitalapp.service.LeitoService;
 import com.hospitalapp.hospitalapp.service.LogInternacaoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

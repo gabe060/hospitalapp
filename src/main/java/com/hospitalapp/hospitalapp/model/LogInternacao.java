@@ -26,4 +26,5 @@ public class LogInternacao {
 
     private LocalDateTime dataInternacao;
     private LocalDateTime dataAlta;
+
 }

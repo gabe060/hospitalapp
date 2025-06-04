@@ -28,5 +28,4 @@ public class Paciente {
     @Column(name = "alta")
     private LocalDateTime dataAlta;
 
-
 }
