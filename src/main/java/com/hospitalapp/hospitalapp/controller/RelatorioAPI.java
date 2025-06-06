@@ -6,6 +6,7 @@ import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.projection.*;
 import com.hospitalapp.hospitalapp.service.*;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,14 +47,19 @@ public class RelatorioAPI {
         return ResponseEntity.ok(leitos);
     }
 
-    @GetMapping("/paciente-quarto")
-    public ResponseEntity<QuartoInternadoProjection> getQuartoByPacienteId(@PathVariable("hospitalId") Long hospitalId, @RequestBody @Valid PacienteIdDTO dto) {
-        Long pacienteId = dto.getPacienteId();
-        QuartoInternadoProjection quarto = leitoService.getQuartoPaciente(pacienteId, hospitalId);
+    @GetMapping("/paciente-quarto/{pacienteId}")
+    public ResponseEntity<PacienteQuartoProjection> getQuartoByPacienteId(@PathVariable("hospitalId") Long hospitalId, @PathVariable("pacienteId") Long pacienteId) {
+        PacienteQuartoProjection quarto = pacienteService.getQuartoPaciente(pacienteId, hospitalId);
         return ResponseEntity.ok(quarto);
     }
 
-    @GetMapping("/quartos-especialidades")
+    @GetMapping("/paciente-info/{pacienteId}")
+    public ResponseEntity<InfoPacienteProjection> getInfoPaciente(@PathVariable("hospitalId") Long hospitalId, @PathVariable("pacienteId") Long pacienteId) {
+        InfoPacienteProjection quarto = pacienteService.getInfoPaciente(pacienteId, hospitalId);
+        return ResponseEntity.ok(quarto);
+    }
+
+    @GetMapping("/quartos-info-especialidade")
     public ResponseEntity<List<QuartoInfoByEspecialidadeProjection>> getQuartoInfoByEspecialidade(@PathVariable("hospitalId") Long hospitalId) {
         List<QuartoInfoByEspecialidadeProjection> quartosInfo = quartoService.getInfoQuartosByEspecialidade(hospitalId);
         return ResponseEntity.ok(quartosInfo);
@@ -72,9 +78,14 @@ public class RelatorioAPI {
     }
 
     @GetMapping("/leito-historico/{codigoLeito}")
-    public ResponseEntity<List<HistoricoInternacaoLeitoProjection>> getPacientesInternadosAlfabeticamente (@PathVariable("hospitalId") Long hospitalId, @PathVariable("codigoLeito") String codigoLeito) {
+    public ResponseEntity<List<HistoricoInternacaoLeitoProjection>> getHistoricoLeito (@PathVariable("hospitalId") Long hospitalId, @PathVariable("codigoLeito") String codigoLeito) {
         List<HistoricoInternacaoLeitoProjection> historico = leitoService.getHistoricoByCodigoLeito(codigoLeito, hospitalId);
         return ResponseEntity.ok(historico);
     }
 
+    @GetMapping("/paciente-historico/{pacienteId}/page/{page}")
+    public ResponseEntity<Page<HistoricoInternacaoPacienteProjection>> getHistoricoPacientePaginavel (@PathVariable("hospitalId") Long hospitalId, @PathVariable("pacienteId") Long pacienteId, @PathVariable("page") int page) {
+        Page<HistoricoInternacaoPacienteProjection> historico = pacienteService.getHistoricoPaciente(pacienteId, hospitalId, page);
+        return ResponseEntity.ok(historico);
+    }
 }

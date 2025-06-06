@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import java.time.LocalDateTime;
 
-@JsonPropertyOrder({ "nomePaciente", "especialidade", "dataInternacao", "diasInternado" })
-public interface PacientesInternadosAlfabeticoProjection {
+@JsonPropertyOrder({ "nomePaciente", "especialidade", "dataInternacao", "dataAlta" })
+public interface HistoricoInternacaoPacienteProjection {
     String getNomePaciente();
     String getEspecialidade();
     LocalDateTime getDataInternacao();
-    Integer getDiasInternado();
+    LocalDateTime getDataAlta();
+
 }

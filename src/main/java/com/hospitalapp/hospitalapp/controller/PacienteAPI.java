@@ -47,7 +47,7 @@ public class PacienteAPI {
         logInternacaoService.log(leitoId, pacienteId);
 
 
-        return ResponseEntity.ok("Paciente " + nome + " foi internado na ala " + alaId + " (" + especialidadeAla + "), quarto " + codigoQuarto + ", leito " + codigoLeito + " em " + dataInternacao + ".");
+        return ResponseEntity.ok("Paciente " + nome + " (" + pacienteId + ") foi internado na ala " + alaId + " (" + especialidadeAla + "), quarto " + codigoQuarto + ", leito " + codigoLeito + " em " + dataInternacao + ".");
     }
 
     @PostMapping("/alta")
