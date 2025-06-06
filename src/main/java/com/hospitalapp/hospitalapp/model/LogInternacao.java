@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -26,4 +27,5 @@ public class LogInternacao {
 
     private LocalDateTime dataInternacao;
     private LocalDateTime dataAlta;
+
 }

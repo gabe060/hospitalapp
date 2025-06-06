@@ -12,4 +12,5 @@ public class EspecialidadeDTO {
 
     @NotEmpty(message = "A especialidade da ala não pode ser vazia")
     private String especialidade;
+
 }

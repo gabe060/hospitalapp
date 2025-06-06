@@ -3,7 +3,6 @@ package com.hospitalapp.hospitalapp.service;
 import com.hospitalapp.hospitalapp.enums.StatusEnum;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.projection.HistoricoInternacaoLeitoProjection;
-import com.hospitalapp.hospitalapp.projection.InfoPacienteProjection;
 import com.hospitalapp.hospitalapp.repository.LeitoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;

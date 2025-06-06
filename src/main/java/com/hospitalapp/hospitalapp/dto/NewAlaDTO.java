@@ -20,5 +20,4 @@ public class NewAlaDTO {
     @NotNull(message = "A quantidade de leitos não pode ser vazia")
     private Integer quantidadeLeitosPorQuarto;
 
-
 }

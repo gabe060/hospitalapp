@@ -15,13 +15,13 @@ import java.util.Optional;
 
 @Repository
 public interface LeitoRepository extends JpaRepository<Leito, Long> {
-    Optional<Leito> findByLeitoIdAndQuartoAlaHospitalHospitalId(@Param("leitoId") Long leitoId, @Param("hospitalId") Long hospitalId);
+    Optional<Leito> findByLeitoIdAndQuartoAlaHospitalHospitalId(Long leitoId, Long hospitalId);
 
-    Optional<Leito> findFirstByQuartoAlaEspecialidadeIgnoreCaseAndQuartoAlaHospitalHospitalIdAndStatus(@Param("especialidade") String especialidade, @Param("hospitalId") Long hospitalId, @Param("status") StatusEnum status);
+    Optional<Leito> findFirstByQuartoAlaEspecialidadeIgnoreCaseAndQuartoAlaHospitalHospitalIdAndStatus(String especialidade, Long hospitalId, StatusEnum status);
 
-    Optional<Leito> findByPacientePacienteIdAndQuartoAlaHospitalHospitalId(@Param("pacienteId") Long pacienteId, @Param("hospitalId") Long hospitalId);
+    Optional<Leito> findByPacientePacienteIdAndQuartoAlaHospitalHospitalId(Long pacienteId, Long hospitalId);
 
-    Iterable<Leito> findByStatusAndQuartoAlaEspecialidadeAndQuartoAlaHospitalHospitalId(@Param("status") StatusEnum status, @Param("especialidade") String especialidade, @Param("hospitalId") Long hospitalId);
+    Iterable<Leito> findByStatusAndQuartoAlaEspecialidadeAndQuartoAlaHospitalHospitalId(StatusEnum status, String especialidade, Long hospitalId);
 
     @Query("""
                 SELECT\s
@@ -39,7 +39,7 @@ public interface LeitoRepository extends JpaRepository<Leito, Long> {
                 AND h.hospitalId = :hospitalId
                 AND p.dataAlta IS NULL
             """)
-    Optional<InfoPacienteProjection> findInfoPacienteByPacienteId(@Param("pacienteId") Long pacienteId, @Param("hospitalId") Long hospitalId);
+    Optional<InfoPacienteProjection> findInfoPacienteByPacienteId(Long pacienteId, Long hospitalId);
 
     @Query("""
                 SELECT\s
@@ -56,10 +56,10 @@ public interface LeitoRepository extends JpaRepository<Leito, Long> {
             """)
     Optional<PacienteQuartoProjection> findQuartoPaciente(@Param("pacienteId") Long pacienteId, @Param("hospitalId") Long hospitalId);
 
-    Iterable<Leito> findAllByQuartoAlaHospitalHospitalId(@Param("hospitalId") Long hospitalId);
+    Iterable<Leito> findAllByQuartoAlaHospitalHospitalId(Long hospitalId);
 
     @Query(value = """
-                SELECT 
+                SELECT\s
                     l.codigo AS codigoLeito,
                     p.nome AS nomePaciente,
                     log.data_internacao AS dataInternacao,
@@ -73,6 +73,6 @@ public interface LeitoRepository extends JpaRepository<Leito, Long> {
                 WHERE l.codigo = :codigoLeito
                 AND h.hospital_id = :hospitalId
                 ORDER BY log.data_internacao DESC
-            """, nativeQuery = true)
+           \s""", nativeQuery = true)
     List<HistoricoInternacaoLeitoProjection> findHistoricoByCodigoLeito(@Param("codigoLeito") String codigoLeito, @Param("hospitalId") Long hospitalId);
 }

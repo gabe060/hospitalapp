@@ -9,7 +9,6 @@ import com.hospitalapp.hospitalapp.projection.InfoPacienteProjection;
 import com.hospitalapp.hospitalapp.projection.PacienteQuartoProjection;
 import com.hospitalapp.hospitalapp.projection.PacientesInternadosAlfabeticoProjection;
 import com.hospitalapp.hospitalapp.repository.LeitoRepository;
-import com.hospitalapp.hospitalapp.repository.LogInternacaoRepository;
 import com.hospitalapp.hospitalapp.repository.PacienteRepository;
 import com.hospitalapp.hospitalapp.repository.QuartoRepository;
 import jakarta.transaction.Transactional;
@@ -29,13 +28,11 @@ public class PacienteService {
     private final PacienteRepository pacienteRepository;
     private final LeitoRepository leitoRepository;
     private final QuartoRepository quartoRepository;
-    private final LogInternacaoRepository logInternacaoRepository;
 
-    public PacienteService(PacienteRepository pacienteRepository, LeitoRepository leitoRepository, QuartoRepository quartoRepository, LogInternacaoRepository logInternacaoRepository) {
+    public PacienteService(PacienteRepository pacienteRepository, LeitoRepository leitoRepository, QuartoRepository quartoRepository) {
         this.pacienteRepository = pacienteRepository;
         this.leitoRepository = leitoRepository;
         this.quartoRepository = quartoRepository;
-        this.logInternacaoRepository = logInternacaoRepository;
     }
 
     @Transactional
@@ -65,8 +62,7 @@ public class PacienteService {
         this.leitoRepository.save(leito);
 
         Quarto quarto = leito.getQuarto();
-        boolean todosOcupados = quarto.getLeitos().stream()
-                .allMatch(l -> l.getStatus() == StatusEnum.OCUPADO);
+        boolean todosOcupados = quarto.getLeitos().stream().allMatch(l -> l.getStatus() == StatusEnum.OCUPADO);
         if (todosOcupados) {
             quarto.setStatus(StatusEnum.OCUPADO);
             quartoRepository.save(quarto);
@@ -84,8 +80,7 @@ public class PacienteService {
         this.leitoRepository.save(leito);
 
         Quarto quarto = leito.getQuarto();
-        boolean algumLiberado = quarto.getLeitos().stream()
-                .anyMatch(l -> l.getStatus() == StatusEnum.LIBERADO);
+        boolean algumLiberado = quarto.getLeitos().stream().anyMatch(l -> l.getStatus() == StatusEnum.LIBERADO);
         if (algumLiberado) {
             quarto.setStatus(StatusEnum.LIBERADO);
             quartoRepository.save(quarto);

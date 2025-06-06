@@ -1,7 +1,6 @@
 package com.hospitalapp.hospitalapp.controller;
 
 import com.hospitalapp.hospitalapp.dto.EspecialidadeDTO;
-import com.hospitalapp.hospitalapp.dto.PacienteIdDTO;
 import com.hospitalapp.hospitalapp.model.Leito;
 import com.hospitalapp.hospitalapp.projection.*;
 import com.hospitalapp.hospitalapp.service.*;

@@ -28,7 +28,7 @@ public class LogInternacaoService {
     }
 
     @Transactional
-    public void log(Long leitoId, Long pacienteId) {
+    public void logInternacao(Long leitoId, Long pacienteId) {
         LogInternacao log = new LogInternacao();
         log.setLeitoId(leitoId);
         log.setPacienteId(pacienteId);
