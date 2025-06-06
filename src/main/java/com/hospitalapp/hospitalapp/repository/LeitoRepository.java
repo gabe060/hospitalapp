@@ -59,7 +59,7 @@ public interface LeitoRepository extends JpaRepository<Leito, Long> {
     Iterable<Leito> findAllByQuartoAlaHospitalHospitalId(Long hospitalId);
 
     @Query(value = """
-                SELECT 
+                SELECT\s
                     l.codigo AS codigoLeito,
                     p.nome AS nomePaciente,
                     log.data_internacao AS dataInternacao,
@@ -73,6 +73,6 @@ public interface LeitoRepository extends JpaRepository<Leito, Long> {
                 WHERE l.codigo = :codigoLeito
                 AND h.hospital_id = :hospitalId
                 ORDER BY log.data_internacao DESC
-            """, nativeQuery = true)
+           \s""", nativeQuery = true)
     List<HistoricoInternacaoLeitoProjection> findHistoricoByCodigoLeito(@Param("codigoLeito") String codigoLeito, @Param("hospitalId") Long hospitalId);
 }

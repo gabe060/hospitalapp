@@ -9,7 +9,6 @@ import com.hospitalapp.hospitalapp.projection.InfoPacienteProjection;
 import com.hospitalapp.hospitalapp.projection.PacienteQuartoProjection;
 import com.hospitalapp.hospitalapp.projection.PacientesInternadosAlfabeticoProjection;
 import com.hospitalapp.hospitalapp.repository.LeitoRepository;
-import com.hospitalapp.hospitalapp.repository.LogInternacaoRepository;
 import com.hospitalapp.hospitalapp.repository.PacienteRepository;
 import com.hospitalapp.hospitalapp.repository.QuartoRepository;
 import jakarta.transaction.Transactional;

@@ -20,7 +20,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
     Optional<Paciente> findByPacienteId(Long pacienteId);
 
     @Query(value = """
-            SELECT 
+            SELECT\s
                 p.nome AS nomePaciente,
                 a.especialidade AS especialidade,
                 p.internacao AS dataInternacao,
@@ -32,11 +32,11 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
             WHERE p.alta IS NULL
                 AND a.hospital_id = :hospitalId
             ORDER BY a.especialidade, p.nome
-            """, nativeQuery = true)
+           \s""", nativeQuery = true)
     List<PacientesInternadosAlfabeticoProjection> findPacientesInternadosAlfabeticamenteByHospitalId(@Param("hospitalId") Long hospitalId);
 
     @Query(value = """
-                SELECT 
+                SELECT\s
                     p.nome AS nomePaciente,
                     a.especialidade AS especialidade,
                     log.data_internacao AS dataInternacao,
@@ -49,7 +49,7 @@ public interface PacienteRepository extends JpaRepository<Paciente, Long> {
                 WHERE p.paciente_id = :pacienteId
                 AND a.hospital_id = :hospitalId
                 ORDER BY log.data_internacao DESC
-            """, countQuery = """
+           \s""", countQuery = """
                 SELECT COUNT(*)
                 FROM log_internacao log
                 WHERE log.paciente_id = :pacienteId

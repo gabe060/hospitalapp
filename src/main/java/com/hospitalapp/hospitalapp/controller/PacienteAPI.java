@@ -44,10 +44,10 @@ public class PacienteAPI {
         LocalDateTime dataInternacao = leito.getPaciente().getDataInternacao();
         Long leitoId = leito.getLeitoId();
         Long pacienteId = leito.getPaciente().getPacienteId();
-        logInternacaoService.log(leitoId, pacienteId);
+        logInternacaoService.logInternacao(leitoId, pacienteId);
 
 
-        return ResponseEntity.ok("Paciente " + nome + " (" + pacienteId + ") foi internado na ala " + alaId + " (" + especialidadeAla + "), quarto " + codigoQuarto + ", leito " + codigoLeito + " em " + dataInternacao + ".");
+        return ResponseEntity.ok("Paciente " + nome + " (" + pacienteId + ") foi internado(a) na ala " + alaId + " (" + especialidadeAla + "), quarto " + codigoQuarto + ", leito " + codigoLeito + " em " + dataInternacao + ".");
     }
 
     @PostMapping("/alta")
