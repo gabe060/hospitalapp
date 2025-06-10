@@ -32,7 +32,7 @@ public class QuartoService {
 
     @Transactional
     public List<QuartoInfoByEspecialidadeProjection> getInfoQuartosByEspecialidade(Long hospitalId) {
-        List<QuartoInfoByEspecialidadeProjection> infoQuartos = quartoRepository.findInfoQuartosByEspecialidade(hospitalId);
+        List<QuartoInfoByEspecialidadeProjection> infoQuartos = this.quartoRepository.findInfoQuartosByEspecialidade(hospitalId);
 
         if (infoQuartos.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não há quartos cadastrados no hospital de ID " + hospitalId);
@@ -43,7 +43,7 @@ public class QuartoService {
 
     @Transactional
     public List<QuartoWithLeitoLiberadoProjection> getQuartoWithLeitoDisponivel(Long hospitalId) {
-        List<QuartoWithLeitoLiberadoProjection> quartosLeitoDisponivel = quartoRepository.findQuartosWithLeitoLiberado(hospitalId);
+        List<QuartoWithLeitoLiberadoProjection> quartosLeitoDisponivel = this.quartoRepository.findQuartosWithLeitoLiberado(hospitalId);
 
         if (quartosLeitoDisponivel.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não há quartos com leitos liberados no hospital de ID " + hospitalId);

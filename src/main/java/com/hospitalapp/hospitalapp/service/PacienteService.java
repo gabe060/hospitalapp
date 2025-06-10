@@ -65,7 +65,7 @@ public class PacienteService {
         boolean todosOcupados = quarto.getLeitos().stream().allMatch(l -> l.getStatus() == StatusEnum.OCUPADO);
         if (todosOcupados) {
             quarto.setStatus(StatusEnum.OCUPADO);
-            quartoRepository.save(quarto);
+            this.quartoRepository.save(quarto);
         }
 
     }
@@ -83,7 +83,7 @@ public class PacienteService {
         boolean algumLiberado = quarto.getLeitos().stream().anyMatch(l -> l.getStatus() == StatusEnum.LIBERADO);
         if (algumLiberado) {
             quarto.setStatus(StatusEnum.LIBERADO);
-            quartoRepository.save(quarto);
+            this.quartoRepository.save(quarto);
         }
     }
 
