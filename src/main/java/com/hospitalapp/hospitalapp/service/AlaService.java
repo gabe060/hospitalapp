@@ -84,7 +84,7 @@ public class AlaService {
 
         ala.setQuartos(quartosList);
         hospital.addAla(ala);
-        this.hospitalRepository.save(hospital);
+        hospitalRepository.save(hospital);
     }
 
 }

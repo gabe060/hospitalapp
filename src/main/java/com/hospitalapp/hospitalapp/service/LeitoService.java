@@ -51,19 +51,18 @@ public class LeitoService {
 
     @Transactional
     public Iterable<Leito> findAllByHospitalId(Long hospitalId) {
-        Iterable<Leito> iterable = leitoRepository.findAllByQuartoAlaHospitalHospitalId(hospitalId);
+        Iterable<Leito> iterable = this.leitoRepository.findAllByQuartoAlaHospitalHospitalId(hospitalId);
         List<Leito> leitos = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
 
         if (leitos.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Não há leitos cadastrados no hospital de ID " + hospitalId);
         }
-
         return leitos;
     }
 
     @Transactional
     public List<HistoricoInternacaoLeitoProjection> getHistoricoByCodigoLeito(String codigoLeito, Long hospitalId) {
-        List<HistoricoInternacaoLeitoProjection> historico = leitoRepository.findHistoricoByCodigoLeito(codigoLeito, hospitalId);
+        List<HistoricoInternacaoLeitoProjection> historico = this.leitoRepository.findHistoricoByCodigoLeito(codigoLeito, hospitalId);
         if (historico.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nenhum histórico encontrado para o leito " + codigoLeito + " no hospital de ID " + hospitalId);
         }
